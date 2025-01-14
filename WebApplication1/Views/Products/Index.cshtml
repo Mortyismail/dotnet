@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Product>
+
+<div class="container">
+    <h2>Products</h2>
+
+    <div class="row mb-3">
+        <div class="col">
+            <form asp-action="Index" method="get" class="form-inline">
+                <input type="text" name="searchString" class="form-control mr-2" placeholder="Search products..." />
+                <select name="categoryId" class="form-control mr-2" asp-items="ViewBag.Categories">
+                    <option value="">All Categories</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    @if (item.Images != null && item.Images.Any())
+                    {
+                        <img src="@item.Images.First().ImageUrl" class="card-img-top" alt="@item.Title">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text"><strong>Price: </strong>@item.Price.ToString("C")</p>
+                        <p class="card-text"><small class="text-muted">Posted by @item.Seller.Email</small></p>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

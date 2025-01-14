@@ -1,0 +1,69 @@
+﻿@*
+    @model ProductViewModel
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @model ProductViewModel
+
+    <div class="container">
+        <h2>Edit Product</h2>
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Title">Title</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description">Description</label>
+                <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price">Price</label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CategoryId">Category</label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories">
+                    <option value="">-- Select Category --</option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Current Images</label>
+                <div class="row">
+                    @foreach (var image in Model.CurrentImages)
+                    {
+                        <div class="col-md-3 mb-3">
+                            <div class="card">
+                                <img src="@image.ImageUrl" class="card-img-top" alt="Product image">
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="ImagesToDelete" value="@image.Id" class="form-check-input">
+                                        <label class="form-check-label">Delete</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Add New Images</label>
+                <input type="file" name="NewImages" multiple class="form-control" accept="image/*" />
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+            <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+        </form>
+    </div>
+}
